@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "Scripture Lock",
+    "version": "1.0",
+
+    "description": "Redirects users out of other pages until a page of scripture is read.",
+
+    "icons":{
+        "48": "icons/scripture.jpg"
+    },
+
+    "contents_scripts": [
+        {
+            "matches" : ["*://*.mozilla.org/*"],
+            "js": ["borderify.js"]    
+        }
+    ]
+}
