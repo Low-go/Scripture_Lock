@@ -9,10 +9,10 @@
         "48": "icons/scripture.jpg"
     },
 
-    "contents_scripts": [
+    "content_scripts": [
         {
-            "matches" : ["*://*.mozilla.org/*"],
-            "js": ["borderify.js"]    
+            "matches": ["*://*.mozilla.org/*"],
+            "js": ["scripture_lock.js"]    
         }
     ]
 }
