@@ -2,17 +2,16 @@
     "manifest_version": 2,
     "name": "Scripture Lock",
     "version": "1.0",
-
     "description": "Redirects users out of other pages until a page of scripture is read.",
-
     "icons":{
         "48": "icons/scripture.jpg"
     },
-
-    "content_scripts": [
-        {
-            "matches": ["*://*.mozilla.org/*"],
-            "js": ["scripture_lock.js"]    
-        }
+    "background": {
+        "scripts": ["scripture_lock.js"]
+    },
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>"
     ]
 }
