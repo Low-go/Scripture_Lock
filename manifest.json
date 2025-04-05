@@ -12,7 +12,8 @@
     "permissions": [
         "webRequest",
         "webRequestBlocking",
-        "<all_urls>"
+        "<all_urls>",
+        "storage"
     ],
     "content_scripts": [
         {
