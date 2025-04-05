@@ -13,5 +13,11 @@
         "webRequest",
         "webRequestBlocking",
         "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["https://www.churchofjesuschrist.org/study/scriptures/bofm*"],
+            "js": ["scripture_content.js"]
+        }
     ]
 }
