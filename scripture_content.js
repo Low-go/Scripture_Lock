@@ -12,6 +12,10 @@ function checkBottom(scrollPos){
 
     if (Math.ceil(scrollPos + window.innerHeight) >= document.body.scrollHeight) {
         console.log("You're at the bottom!");
+
+        browser.storage.local.set({ redirectsUnlocked: true}, () => { // local storage save to persist even after browser restart
+            console.log("Redirects unlocked flag saved!");            // sets variable to true
+        })
     }
 }
 
@@ -21,7 +25,7 @@ addEventListener("scroll", (event) => {
 
     if (!ticking){
         window.requestAnimationFrame(() => {
-            doSomething(lastKnownScrollPosition);
+            checkBottom(lastKnownScrollPosition);
             ticking = false;
         });
 
@@ -29,4 +33,3 @@ addEventListener("scroll", (event) => {
     }
 });
 
-onscroll = (event) => {};
