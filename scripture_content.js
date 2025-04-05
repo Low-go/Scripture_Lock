@@ -38,8 +38,8 @@ addEventListener("scroll", (event) => {
 
 
 function createLockAnimation() {
-    const circleContainer = document.createElement('div');
-    circleContainer.style.cssText = `
+    const lockContainer = document.createElement('div');
+    lockContainer.style.cssText = `
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -53,7 +53,7 @@ function createLockAnimation() {
       justify-content: center;
       align-items: center;
     `;
-    document.body.appendChild(circleContainer);
+    document.body.appendChild(lockContainer);
 
     return {
       container: circleContainer,
@@ -69,3 +69,32 @@ function unlock(unlocked){
 
 lockAnimation = createLockAnimation();
 
+
+
+.top-lock{
+    width: 100px;
+    height: 100px;
+    border: 6px solid grey;
+    border-bottom-left-radius: 110px;
+    border-bottom-right-radius: 110px;
+    position: absolute;
+    top: 93px;
+    left: 68px;
+    content: "";
+    z-index: 5;
+    border-top-left-radius: 110px;
+    border-top-right-radius: 110px;
+}
+
+.lockBody{
+    width: 150px;
+    height: 150px;
+    background: rgb(37, 35, 37);
+    border: 4px solid #fff;
+    border-radius: 20px;
+    position: absolute;
+    left: 43px;
+    top: 150px;
+    text-align: CSSLayerBlockRule;
+    z-index: 6;
+}
