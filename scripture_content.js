@@ -58,8 +58,8 @@ function createLockAnimation() {
   lockContainer.id = 'lock-container';
   lockContainer.style.cssText = `
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 25px;
+    right: 85px;
     width: 100px;
     height: 100px;
     z-index: 10000;
@@ -223,7 +223,7 @@ function unlock() {
   setTimeout(() => {
     lockAnimation.container.style.opacity = "0";
     
-    // Remove from DOM after fade completes
+    // Remove from DOM 
     setTimeout(() => {
       if (lockAnimation.container && lockAnimation.container.parentNode) {
         document.body.removeChild(lockAnimation.container);
