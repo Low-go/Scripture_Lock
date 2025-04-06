@@ -1,16 +1,13 @@
-
 let lastKnownScrollPosition = 0;
 let ticking = false;
 let lockAnimation;
 let isUnlocked = false;
-
 
 // Check if redirects are already unlocked from previous sessions
 browser.storage.local.get('redirectsUnlocked', (result) => {
   if (result.redirectsUnlocked) {
     console.log("Redirects were previously unlocked!");
     isUnlocked = true;
-    
   } else {
     // Create lock animation only if not previously unlocked
     lockAnimation = createLockAnimation();
@@ -25,11 +22,6 @@ function checkBottom(scrollPos) {
     if (!isUnlocked) {
       isUnlocked = true;
       unlock();
-      
-      // Save unlocked state to persist after browser restart
-      browser.storage.local.set({ redirectsUnlocked: true }, () => {
-        console.log("Redirects unlocked flag saved!");
-      });
     }
   }
 }
@@ -71,7 +63,7 @@ function createLockAnimation() {
     transform: scale(0.6);
     transition: all 0.5s ease;
   `;
-
+  
   // Create top lock part
   const topLock = document.createElement('div');
   topLock.id = 'top-lock';
@@ -86,7 +78,7 @@ function createLockAnimation() {
     z-index: 5;
     transition: transform 0.7s ease, border-color 0.5s ease;
   `;
-
+  
   // Create lock body
   const lockBody = document.createElement('div');
   lockBody.id = 'lock-body';
@@ -199,12 +191,23 @@ function createLockAnimation() {
   };
 }
 
-// Handle unlocking animation and state
+// Handle unlocking animation
 function unlock() {
   if (!lockAnimation || !lockAnimation.container) return;
   
   // Colors for unlocked state
   const unlockedColor = "#00b300";
+  
+  // Send message to background script to update storage
+  browser.runtime.sendMessage({action: "unlock"})
+    .then(response => {
+      if (response && response.success) {
+        console.log("Redirects unlocked successfully");
+      }
+    })
+    .catch(err => {
+      console.error("Error sending unlock message:", err);
+    });
   
   // Play unlock animation
   lockAnimation.toggle.checked = true;
@@ -233,6 +236,3 @@ function unlock() {
     }, 500);
   }, 3000);
 }
-
-// sees how much time has passed from internal storage
-
