@@ -4,11 +4,13 @@ let ticking = false;
 let lockAnimation;
 let isUnlocked = false;
 
+console.log("conetnt script loaded");
 // Check if redirects are already unlocked from previous sessions
 browser.storage.local.get('redirectsUnlocked', (result) => {
   if (result.redirectsUnlocked) {
     console.log("Redirects were previously unlocked!");
     isUnlocked = true;
+    handleRedirectTiming();
   } else {
     // Create lock animation only if not previously unlocked
     lockAnimation = createLockAnimation();
@@ -230,4 +232,23 @@ function unlock() {
       }
     }, 500);
   }, 3000);
+}
+
+// sees how much time has passed from internal storage
+
+function handleRedirectTiming() {
+  browser.storage.local.get('savedTimestamp', (result) => {
+    if (!result.savedTimestamp){
+      const now = Date.now();
+      browser.storage.local.set({savedTimestamp: now}, () =>{
+        console.log("initial timestamp saved at:", new Date(now).toLocaleString());
+      });
+    }
+    else{
+      const saved = result.savedTimestamp;
+      const now = Date.now();
+      const elapsed = formatElapsed(now - saved)
+      console.log(`Time since last unlock attempt: ${elapsed}`);
+    }
+  });
 }

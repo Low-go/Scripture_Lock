@@ -4,6 +4,8 @@ const scriptureUrl = "https://www.churchofjesuschrist.org/study/scriptures/bofm"
 
 browser.webRequest.onBeforeRequest.addListener(
   async function(details) {
+    console.log("test");
+    handleRedirectTiming();
 
     const storage = await browser.storage.local.get("redirectsUnlocked");
 
@@ -30,3 +32,21 @@ browser.webRequest.onBeforeRequest.addListener(
   { urls: ["<all_urls>"] },
   ["blocking"]
 );
+
+function handleRedirectTiming() {
+  browser.storage.local.get('savedTimestamp', (result) => {
+    if (!result.savedTimestamp){
+      const now = Date.now();
+      browser.storage.local.set({savedTimestamp: now}, () =>{
+        console.log("initial timestamp saved at:", new Date(now).toLocaleString());
+      });
+    }
+    else{
+      const saved = result.savedTimestamp;
+      const now = Date.now();
+      const elapsed = formatElapsed(now - saved)
+      console.log("here");
+      console.log(`Time since last unlock attempt: ${elapsed}`);
+    }
+  });
+}
